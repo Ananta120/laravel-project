@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profil</title>
-</head>
-<body>
-    <h1>Halaman Profil</h1>
-    <p>Nama: Ananta jayawisnu Wardhana</p>
-    <p>Jurusan: Sistem Informasi</p>
+@extends('layouts.app')
 
-    <a href="/">Home</a> |
-    <a href="/kontak">Kontak</a>
-</body>
-</html>
+@section('content')
+
+<h1 class="text-5xl text-red-500 font-bold">
+    TEST TAILWIND
+</h1>
+
+@endsection

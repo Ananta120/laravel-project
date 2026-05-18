@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class Homecontroller extends Homecontroller
+abstract class Controller
 {
-    public function index()
-    {
-        return view('home');
-    }
+    //
 }
