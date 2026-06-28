@@ -11,6 +11,23 @@ class Campaign extends Model
         'description',
         'target_donation',
         'collected_donation',
-        'deadline'
+        'deadline',
+        'attachment',
+        'file_type',
     ];
+
+    public function account()
+    {
+        return $this->hasOne(CampaignAccount::class);
+    }
+
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'campaign_category');
+    }
 }

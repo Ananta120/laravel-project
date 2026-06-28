@@ -20,7 +20,23 @@ class CampaignController extends Controller
 
     public function store(Request $request)
     {
-        Campaign::create($request->all());
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'target_donation' => 'required|numeric',
+            'collected_donation' => 'required|numeric',
+            'deadline' => 'required|date',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+        ]);
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+
+            $data['attachment'] = $file->store('campaigns', 'public');
+            $data['file_type'] = strtolower($file->getClientOriginalExtension());
+        }
+
+        Campaign::create($data);
 
         return redirect('/campaign')
             ->with('success', 'Campaign berhasil ditambahkan');
@@ -37,7 +53,23 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
 
-        $campaign->update($request->all());
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'target_donation' => 'required|numeric',
+            'collected_donation' => 'required|numeric',
+            'deadline' => 'required|date',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+        ]);
+
+        if ($request->hasFile('attachment')) {
+            $file = $request->file('attachment');
+
+            $data['attachment'] = $file->store('campaigns', 'public');
+            $data['file_type'] = strtolower($file->getClientOriginalExtension());
+        }
+
+        $campaign->update($data);
 
         return redirect('/campaign')
             ->with('success', 'Campaign berhasil diupdate');

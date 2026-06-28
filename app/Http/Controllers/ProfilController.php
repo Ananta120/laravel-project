@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ProfilControler extends Controller
+class ProfilController extends Controller
 {
     public function index()
     {

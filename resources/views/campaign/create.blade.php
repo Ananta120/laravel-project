@@ -2,42 +2,149 @@
 
 @section('content')
 
-<h1 class="text-3xl font-bold mb-5">
-    Tambah Campaign Bantuan
-</h1>
+<div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
 
-<form action="/campaign" method="POST"
-      class="bg-white p-6 rounded-xl shadow">
+    <h1 class="text-3xl font-bold text-green-700 mb-6">
+        Tambah Program Bantuan
+    </h1>
 
-    @csrf
+    <form action="{{ url('/campaign') }}"
+          method="POST"
+          enctype="multipart/form-data">
 
-    <input type="text"
-           name="title"
-           placeholder="Judul Campaign"
-           class="border p-3 rounded-lg w-full mb-4">
+        @csrf
 
-    <textarea name="description"
-              placeholder="Deskripsi Bantuan"
-              class="border p-3 rounded-lg w-full mb-4"></textarea>
+        <div class="mb-4">
+            <label class="font-semibold">Judul Program</label>
 
-    <input type="number"
-           name="target_donation"
-           placeholder="Target Donasi"
-           class="border p-3 rounded-lg w-full mb-4">
+            <input
+                type="text"
+                name="title"
+                class="w-full border rounded-lg p-3 mt-2"
+                required>
+        </div>
 
-    <input type="number"
-           name="collected_donation"
-           placeholder="Donasi Terkumpul"
-           class="border p-3 rounded-lg w-full mb-4">
+        <div class="mb-4">
+            <label class="font-semibold">Deskripsi</label>
 
-    <input type="date"
-           name="deadline"
-           class="border p-3 rounded-lg w-full mb-4">
+            <textarea
+                name="description"
+                rows="4"
+                class="w-full border rounded-lg p-3 mt-2"
+                required></textarea>
+        </div>
 
-    <button class="bg-blue-600 text-white px-5 py-3 rounded-lg">
-        Simpan Campaign
-    </button>
+        <div class="grid grid-cols-2 gap-5">
 
-</form>
+            <div>
+                <label class="font-semibold">Target Donasi</label>
+
+                <input
+                    type="number"
+                    name="target_donation"
+                    class="w-full border rounded-lg p-3 mt-2"
+                    required>
+            </div>
+
+            <div>
+                <label class="font-semibold">Donasi Terkumpul</label>
+
+                <input
+                    type="number"
+                    name="collected_donation"
+                    value="0"
+                    class="w-full border rounded-lg p-3 mt-2">
+            </div>
+
+        </div>
+
+        <div class="mt-5">
+            <label class="font-semibold">Deadline</label>
+
+            <input
+                type="date"
+                name="deadline"
+                class="w-full border rounded-lg p-3 mt-2"
+                required>
+        </div>
+
+        <div class="mt-5">
+            <label class="font-semibold">
+                Upload Dokumentasi
+            </label>
+
+            <input
+                type="file"
+                id="attachment"
+                name="attachment"
+                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
+                onchange="previewFile(event)"
+                class="w-full border rounded-lg p-3 mt-2">
+
+            <div id="preview" class="mt-5"></div>
+
+        </div>
+
+        <button
+            class="mt-6 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
+
+            Simpan Campaign
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function previewFile(event){
+
+    let file=event.target.files[0];
+
+    let preview=document.getElementById('preview');
+
+    preview.innerHTML="";
+
+    if(!file) return;
+
+    let ext=file.name.split('.').pop().toLowerCase();
+
+    if(['jpg','jpeg','png'].includes(ext)){
+
+        let img=document.createElement('img');
+
+        img.src=URL.createObjectURL(file);
+
+        img.className="w-72 rounded-xl border shadow";
+
+        preview.appendChild(img);
+
+    }
+
+    else if(ext=="pdf"){
+
+        let iframe=document.createElement('iframe');
+
+        iframe.src=URL.createObjectURL(file);
+
+        iframe.width="100%";
+
+        iframe.height="450";
+
+        preview.appendChild(iframe);
+
+    }
+
+    else{
+
+        preview.innerHTML=
+        "<div class='bg-gray-100 p-4 rounded'>📄 "+file.name+"</div>";
+
+    }
+
+}
+
+</script>
 
 @endsection

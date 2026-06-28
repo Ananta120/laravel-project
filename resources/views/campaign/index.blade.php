@@ -42,6 +42,7 @@
             <div class="flex justify-between items-start">
 
                 <div>
+
                     <h2 class="text-2xl font-bold text-green-700">
                         {{ $c->title }}
                     </h2>
@@ -49,6 +50,32 @@
                     <p class="text-gray-600 mt-2">
                         {{ $c->description }}
                     </p>
+
+                    @if($c->attachment)
+
+                        <div class="mt-4">
+
+                            @if(in_array($c->file_type,['jpg','jpeg','png']))
+
+                                <img src="{{ asset('storage/'.$c->attachment) }}"
+                                     class="w-60 rounded-xl border">
+
+                            @else
+
+                                <a href="{{ asset('storage/'.$c->attachment) }}"
+                                   target="_blank"
+                                   class="text-blue-600 underline">
+
+                                    📄 Preview File
+
+                                </a>
+
+                            @endif
+
+                        </div>
+
+                    @endif
+
                 </div>
 
                 <div class="text-sm text-gray-500">
@@ -62,7 +89,7 @@
                 <div class="w-full bg-gray-200 rounded-full h-4">
 
                     <div class="bg-green-500 h-4 rounded-full"
-                        style="width: {{ $persen }}%">
+                         style="width: {{ $persen }}%">
                     </div>
 
                 </div>
