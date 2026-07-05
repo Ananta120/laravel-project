@@ -6,11 +6,12 @@ use App\Http\Controllers\KontakController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DocumentationFileController;
+use App\Http\Controllers\FeedController;
 
 Route::get('/', function () {
     return redirect('/campaign');
 });
-
+Route::get('/feeds', [FeedController::class, 'index']);
 Route::get('/kontak', [KontakController::class, 'index']);
 Route::get('/profil', [ProfilController::class, 'index']);
 Route::get('/documentations', [DocumentationFileController::class, 'index']);
